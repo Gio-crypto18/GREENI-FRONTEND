@@ -1,0 +1,75 @@
+<div class="app-layout">
+  <div class="main-content">
+    <header class="diagnostic-header-clean">
+     <h1 class="page-title">Diagnóstico de Plantas</h1>
+     <p class="page-subtitle">
+     Analiza tus plantas por foto y gestiona diagnósticos y tratamientos de forma sencilla.
+     </p>
+    </header>
+
+
+    <div class="diagnostic-layout">
+      <!-- Columna izquierda: análisis -->
+      <section class="diagnostic-options">
+        <!-- Análisis por Foto -->
+        <div class="card">
+          <div class="card-header">
+            <h3><i class="fas fa-camera-retro"></i> Análisis por foto</h3>
+          </div>
+          <div class="card-body">
+            <app-plant-identifier></app-plant-identifier>
+          </div>
+        </div>
+
+        <button class="analyze-btn btn-primary">
+          <i class="fas fa-search"></i>
+          Analizar ahora
+        </button>
+      </section>
+
+      <!-- Columna derecha: botones de gestión -->
+      <aside class="diagnostic-results">
+        <section class="card side-card">
+          <div class="card-header">
+            <h3>Gestión de diagnósticos y tratamientos</h3>
+          </div>
+          <div class="card-body">
+            <div class="actions-column">
+              <button
+                class="interaction-btn"
+                [routerLink]="['/app/diagnostico/agregar']"
+              >
+                <i class="fas fa-plus"></i>
+                Registrar diagnósticos
+              </button>
+
+              <button
+                class="interaction-btn"
+                [routerLink]="['/app/diagnostico/listar']"
+              >
+                <i class="fas fa-list"></i>
+                Listar diagnósticos
+              </button>
+
+              <button
+                class="interaction-btn"
+                [routerLink]="['/app/tratamiento/agregar']"
+              >
+                <i class="fas fa-plus"></i>
+                Registrar tratamientos
+              </button>
+
+              <button
+                class="interaction-btn"
+                [routerLink]="['/app/tratamiento/listar']"
+              >
+                <i class="fas fa-list"></i>
+                Listar tratamientos
+              </button>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+</div>

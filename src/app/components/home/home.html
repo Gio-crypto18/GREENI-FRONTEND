@@ -1,0 +1,116 @@
+<header class="main-header">
+  <button class="menu-toggle-btn" (click)="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
+  <div class="header-content">
+    <h1 id="welcome-message">Buenos días, Usuario</h1>
+    <p>Aquí tienes el resumen de tu jardín para hoy.</p>
+  </div>
+</header>
+
+<div class="dashboard-grid">
+  <!-- Columna principal -->
+  <div class="main-column">
+    <!-- Acciones rápidas -->
+    <section class="quick-actions home-actions">
+      <section class="dashboard-card quick-actions-card">
+        <div class="card-body quick-actions-grid">
+          <!-- Ahora va al flujo de CRUD planta dentro del layout -->
+          <a [routerLink]="['/app/planta/agregar']" class="action-pill">
+            <i class="fas fa-plus"></i>
+            <span>Añadir Planta</span>
+          </a>
+
+          <!-- Vista de diagnóstico dentro del layout -->
+          <a [routerLink]="['/app/diagnostico']" class="action-pill">
+            <i class="fas fa-stethoscope"></i>
+            <span>Diagnosticar Planta</span>
+          </a>
+        </div>
+      </section>
+    </section>
+
+    <!-- Tareas -->
+    <section class="dashboard-card">
+      <div class="card-header">
+        <h3>Tareas para Hoy</h3>
+      </div>
+      <ul class="task-list" id="task-list">
+        <li><i class="fas fa-leaf"></i> Regar Monstera Deliciosa</li>
+        <li><i class="fas fa-seedling"></i> Fertilizar Suculentas</li>
+        <li><i class="fas fa-spa"></i> Podar el Rosal</li>
+      </ul>
+
+      <!-- Componente del Clima -->
+
+    </section>
+  </div>
+
+  <!-- Columna lateral derecha -->
+  <aside class="side-column">
+  <app-weather></app-weather>
+
+    <!-- Consejo del Día -->
+    <div class="dashboard-card">
+      <div class="card-header"><h3>🌱 Consejo del Día</h3></div>
+      <p id="tip-of-day" class="muted">Cargando...</p>
+    </div>
+
+    <!-- Estado del Jardín -->
+    <div class="dashboard-card">
+      <div class="card-header"><h3>🌿 Estado del Jardín</h3></div>
+      <ul class="mini-list" id="garden-stats"></ul>
+    </div>
+
+    <!-- Comunidad Verde -->
+    <div class="dashboard-card">
+      <div class="card-header"><h3>🌎 Comunidad Verde</h3></div>
+      <ul class="mini-feed" id="community-mini">
+        <li><strong>María</strong> compartió su orquídea 🌸</li>
+        <li><strong>José</strong> publicó tips de compostaje ♻️</li>
+        <li><strong>Ana</strong> sembró 3 suculentas 🌵</li>
+      </ul>
+      <a [routerLink]="['/app/comunidad']" class="text-link small"> Ver más en Comunidad </a>
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/app/usuario/listar']"
+      style="display: flex; align-items: center; gap: 8px"
+    >
+      <mat-icon>list</mat-icon>
+      Listar usuarios
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/app/usuario/agregar']"
+      style="display: flex; align-items: center; gap: 8px"
+    >
+      <mat-icon>person_add</mat-icon>
+      Registrar Usuarios
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/app/rol/listar']"
+      style="display: flex; align-items: center; gap: 8px"
+    >
+      <mat-icon>list</mat-icon>
+      Listar rol
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['/app/rol/agregar']"
+      style="display: flex; align-items: center; gap: 8px"
+    >
+      <mat-icon>person_add</mat-icon>
+      Registrar roles
+    </button>
+  </aside>
+</div>

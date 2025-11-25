@@ -1,0 +1,14 @@
+<div class="ia-container">
+  <h2>Asistente de Recomendaciones</h2>
+
+  <textarea [(ngModel)]="pregunta" rows="4" placeholder="Ej. ¿En qué puedo ayudar hoy?"></textarea>
+
+  <button class="ia-button" (click)="preguntarIA()" [disabled]="cargando || !pregunta">
+    {{ cargando ? 'Consultando...' : 'Consultar IA' }}
+  </button>
+
+  <div class="respuesta" [hidden]="!respuesta">
+    <h3>Respuesta:</h3>
+    <p>{{ respuesta }}</p>
+  </div>
+</div>

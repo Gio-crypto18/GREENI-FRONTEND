@@ -1,0 +1,157 @@
+<!-- En el template del componente Planta -->
+<router-outlet></router-outlet>
+<div [hidden]="route.children.length!==0">
+<div class="app-layout">
+  <div class="main-content">
+    <div class="green-bar">
+      <h1>Mis Plantas</h1>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <a class="green-button" style="text-decoration:none; color:white; cursor: not-allowed;" title="Función no implementada">
+          <i class="fas fa-plus"></i> Añadir
+        </a>
+      </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content-section">
+        <!-- Añadir planta -->
+        <section class="card">
+          <div class="card-header"><h3>Añadir planta</h3></div>
+          <form class="card-body">
+            <div class="uploader" style="cursor: not-allowed;" title="Función no implementada">
+              <label class="uploader-hint" tabindex="0">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <p>Arrastra una foto aquí o haz clic para seleccionar</p>
+                <small>Sube una imagen clara de tu planta</small>
+              </label>
+              <input type="file" accept="image/*" style="display:none" disabled />
+              <img class="preview" style="display: none;" />
+            </div>
+
+
+
+          </form>
+        </section>
+
+<section class="content-area panel">
+
+  <div class="header-container" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2 class="panel-title">
+      <mat-icon style="color: #05752a; vertical-align: middle; margin-right: 8px;">eco</mat-icon>
+      Mis plantas registradas
+    </h2>
+<button class="interaction-btn" 
+        type="button"
+        routerLink="/app/planta/listar"
+        style="background: #4caf50; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: background 0.3s ease;">
+  <mat-icon style="font-size: 18px; width: 18px; height: 18px;">list</mat-icon>
+  Ver Todas las Plantas
+</button>
+<br/>
+<button class="interaction-btn" 
+        type="button"
+        routerLink="/app/planta/agregar"
+         style="background: #2e7d32; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: background 0.3s ease;">
+  <i class="fas fa-plus"></i>
+  Insertar Planta
+</button>
+
+ <button class="interaction-btn" 
+                                    [routerLink]="['/app/medicion/listar']"
+                                    style="background: #4caf50; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: background 0.3s ease;">
+                                <i class="fas fa-list"></i>
+                                Listar Mediciones
+                            </button>
+
+                            <!-- Botón para agregar tipo de interacción -->
+                            <button class="interaction-btn" 
+                                    [routerLink]="['/app/medicion/agregar']"
+                                    style="background: #2e7d32; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: background 0.3s ease;">
+                                <i class="fas fa-plus"></i>
+                                Agregar Mediciones
+                            </button>
+
+                            <!-- Botón para agregar tipo de interacción -->
+                            <button class="interaction-btn" 
+                                    [routerLink]="['/app/especie/agregar']"
+                                    style="background: #2e7d32; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: background 0.3s ease;">
+                                <i class="fas fa-plus"></i>
+                                Agregar Especies
+                            </button>
+
+<br/>
+                            <!-- Botón para agregar tipo de interacción -->
+                           <button class="interaction-btn" 
+        type="button"
+        routerLink="/app/especie/listar"
+        style="background: #4caf50; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 500; transition: background 0.3s ease;">
+  <mat-icon style="font-size: 18px; width: 18px; height: 18px;">list</mat-icon>
+  Ver Especies
+</button>
+
+  </div>
+
+
+  <div class="plants-grid">
+    <!-- Plantas de ejemplo (estáticas) -->
+    <div class="plant-card">
+      <div class="plant-image">
+        <div style="width:100%; height:200px; background:#e2e8f0; display:flex; align-items:center; justify-content:center; color:#718096;">
+          <i class="fas fa-seedling" style="font-size:3rem;"></i>
+        </div>
+        <button class="delete-btn" disabled title="Función no implementada">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="plant-info">
+        <h3>Monstera Deliciosa</h3>
+        <p>En la sala de estar, necesita luz indirecta</p>
+      </div>
+    </div>
+
+    <div class="plant-card">
+      <div class="plant-image">
+        <div style="width:100%; height:200px; background:#e2e8f0; display:flex; align-items:center; justify-content:center; color:#718096;">
+          <i class="fas fa-leaf" style="font-size:3rem;"></i>
+        </div>
+        <button class="delete-btn" disabled title="Función no implementada">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="plant-info">
+        <h3>Suculenta</h3>
+        <p>En el balcón, riego semanal</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="empty-state" style="display:none;">
+    Aún no has registrado plantas. ¡Sube una imagen y guarda tu primera planta!
+  </div>
+</section>
+
+        <!-- Especies -->
+        <section class="content-area panel">
+          <h2 class="panel-title">🧬 Especies</h2>
+          <p class="panel-sub">Lista estimada a partir de tus plantas guardadas a espera de conformación de un científico.</p>
+          <div class="species-chips">
+            <span class="species-chip" style="cursor: not-allowed;">Monstera</span>
+            <span class="species-chip" style="cursor: not-allowed;">Suculenta</span>
+            <span class="species-chip" style="cursor: not-allowed;">Cactus</span>
+          </div>
+        </section>
+
+        <!-- Consejos -->
+        <section class="content-area panel">
+          <h2 class="panel-title">Consejos rápidos</h2>
+          <ul class="tips-list">
+            <li>Riega por la mañana para evitar evaporación.</li>
+            <li>Revisa el drenaje de la maceta.</li>
+            <li>Gira la planta cada semana para crecimiento uniforme.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+    <app-chatbot></app-chatbot>
+</div>

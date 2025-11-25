@@ -1,0 +1,131 @@
+<div class="app-layout">
+  <div class="main-content">
+    <header class="main-header">
+     <h1 class="page-title">Guías de Cultivo</h1>
+    </header>
+
+
+    <div class="guides-toolbar">
+      <div class="search-wrapper">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Buscar guías por título o tipo..." 
+               (input)="filterGuides($event)">
+      </div>
+      
+      <!-- BOTONES DE ACCIÓN -->
+<div class="actions-wrapper" style="margin-left: auto; display: flex; gap: 10px;">
+  <!-- Botón para agregar guías -->
+  <button class="create-guide-btn" 
+          [routerLink]="['/app/GUIAS/agregar']">
+    <i class="fas fa-plus"></i> Agregar Guía
+  </button>
+
+  <!-- Botón para listar guías -->
+  <button class="create-guide-btn" 
+          [routerLink]="['/app/GUIAS/listar']">  <!-- Cambiado a /guia/listar -->
+    <i class="fas fa-list"></i> Listar Guías
+  </button>
+
+  <div class="actions-wrapper" style="margin-left: auto; display: flex; gap: 10px;">
+  <!-- Botón para agregar guías -->
+  <button class="create-guide-btn" 
+          [routerLink]="['/app/guiafav/agregar']">
+    <i class="fas fa-plus"></i> Agregar Guía Favorita
+  </button>
+
+  <!-- Botón para listar guías -->
+  <button class="create-guide-btn" 
+          [routerLink]="['/app/guiafav/listar']">  <!-- Cambiado a /guia/listar -->
+    <i class="fas fa-list"></i> Listar Guías Favoritas
+  </button>
+   
+</div>
+
+      <div class="filters-wrapper">
+        <button class="filter-btn" 
+                [class.active]="activeFilter === 'all'"
+                (click)="setFilter('all')">
+          Todas
+        </button>
+        <button class="filter-btn" 
+                [class.active]="activeFilter === 'favoritos'"
+                (click)="setFilter('favoritos')">
+          <i class="fas fa-bookmark"></i> Mis Favoritos
+        </button>
+        <button class="filter-btn" 
+                [class.active]="activeFilter === 'interior'"
+                (click)="setFilter('interior')">
+          Plantas de Interior
+        </button>
+        <button class="filter-btn" 
+                [class.active]="activeFilter === 'exterior'"
+                (click)="setFilter('exterior')">
+          Plantas de Exterior
+        </button>
+        <button class="filter-btn" 
+                [class.active]="activeFilter === 'cuidados'"
+                (click)="setFilter('cuidados')">
+          Cuidados Básicos
+        </button>
+      </div>
+    </div>
+<router-outlet></router-outlet>
+    <section class="guides-container">
+      
+      <div *ngFor="let guide of filteredGuides" class="guide-card" (click)="openGuideModal(guide)">
+        <div class="guide-image">
+          <img [src]="getGuideImage(guide.tipoGuia)" [alt]="guide.tituloGuia">
+          <button class="favorite-btn" 
+                  (click)="toggleFavorite(guide.guiaId); $event.stopPropagation()"
+                  [class.favorited]="isFavorite(guide.guiaId)">
+            <i class="fas fa-bookmark"></i>
+          </button>
+        </div>
+        <div class="guide-content">
+          <h3 class="guide-title">{{ guide.tituloGuia }}</h3>
+          <p class="guide-description">{{ getShortDescription(guide.contenidoGuia) }}</p>
+          <div class="guide-meta">
+            <span class="guide-category {{getCategoryClass(guide.tipoGuia)}}">
+              {{ guide.tipoGuia }}
+            </span>
+            <span class="guide-length">
+              <i class="fas fa-file-alt"></i> {{ getContentLength(guide.contenidoGuia) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="no-results-message" *ngIf="filteredGuides.length === 0">
+      <i class="fas fa-sad-tear"></i>
+      <h3>No se encontraron guías</h3>
+      <p>Intenta con otra búsqueda o cambia los filtros.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" [class.show]="showModal">
+  <div class="modal-content">
+    <button class="close-modal-btn" (click)="closeModal()">&times;</button>
+    <img [src]="getGuideImage(selectedGuide?.tipoGuia)" [alt]="selectedGuide?.tituloGuia" class="modal-image">
+    <div class="modal-text-content">
+      <h2 class="modal-title">{{ selectedGuide?.tituloGuia }}</h2>
+      <div class="guide-type-badge {{getCategoryClass(selectedGuide?.tipoGuia)}}">
+        {{ selectedGuide?.tipoGuia }}
+      </div>
+      
+      <div class="guide-content-full">
+        <p>{{ selectedGuide?.contenidoGuia }}</p>
+      </div>
+
+      <div class="modal-actions">
+        <button class="primary-btn" (click)="toggleFavorite(selectedGuide!.guiaId)">
+          <i class="fas fa-bookmark" [class.favorited]="isFavorite(selectedGuide?.guiaId)"></i>
+          {{ isFavorite(selectedGuide?.guiaId) ? 'Quitar de favoritos' : 'Agregar a favoritos' }}
+        </button>
+        <button class="secondary-btn" (click)="closeModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

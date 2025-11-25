@@ -1,0 +1,245 @@
+/* ===========================
+   ESTILO TIPO "HOME"
+   =========================== */
+
+/* Fondo general tipo Home */
+.app-layout {
+  min-height: 100vh;
+  background-color: #fef8ed !important;   /* crema suave */
+  font-family: "Lato", system-ui, sans-serif;
+  padding-top: 30px; /* para bajar todo un poco */
+}
+
+/* Contenedor principal */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+/* ===========================
+      TÍTULO ESTILO HOME
+   =========================== */
+.page-title {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #212121;         /* negro igual que home */
+  text-align: left;
+  margin-bottom: 28px;    /* BAJA el título */
+  margin-left: 8px;
+  margin-top: 20px;
+}
+
+/* ===========================
+        TOOLBAR / SEARCH
+   =========================== */
+.guides-toolbar {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid #e8e8e8;
+}
+
+/* buscador estilo home */
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 450px;
+}
+
+.search-wrapper i {
+  position: absolute;
+  left: 14px;
+  color: #6b7280;
+}
+
+.search-wrapper input {
+  width: 100%;
+  padding: 11px 15px 11px 45px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  font-size: 15px;
+}
+
+.search-wrapper input:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 0 3px rgba(76,175,80,0.12);
+}
+
+/* ===========================
+        FILTROS
+   =========================== */
+
+.filters-wrapper {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 8px 18px;
+  font-size: 14px;
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  color: #444;
+}
+
+.filter-btn:hover {
+  background: #e8f5e9;
+  border-color: #4caf50;
+  color: #388e3c;
+}
+
+.filter-btn.active {
+  background: #4caf50;
+  border-color: #4caf50;
+  color: #fff;
+}
+
+/* ===========================
+         BOTONES
+   =========================== */
+
+.create-guide-btn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.2s;
+}
+
+.create-guide-btn:hover {
+  background: #43a047;
+}
+
+/* ===========================
+        TARJETAS DE GUÍAS
+   =========================== */
+
+.guides-container {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 22px;
+}
+
+.guide-card {
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid #ececec;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+  transition: 0.25s ease;
+  overflow: hidden;
+}
+
+.guide-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.10);
+}
+
+.guide-image {
+  height: 180px;
+  overflow: hidden;
+}
+
+.guide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* botón favoritos */
+.favorite-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #7b7b7b;
+}
+
+.favorite-btn.favorited {
+  color: #f4b400;
+}
+
+/* contenido tarjeta */
+.guide-content {
+  padding: 18px;
+}
+
+.guide-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.guide-description {
+  color: #6b6b6b;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* ===========================
+         MODAL
+   =========================== */
+.modal.show {
+  display: flex;
+}
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  width: min(850px, 95vw);
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+}
+
+/* ===========================
+         RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.9rem;
+    margin-left: 5px;
+  }
+
+  .guides-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Animación */
+@keyframes fadeIn {
+  from { opacity:0; transform: translateY(10px); }
+  to   { opacity:1; transform: translateY(0); }
+}
