@@ -1,0 +1,52 @@
+<div class="weather-container">
+  <h3>🌤️ Componente del Clima</h3>
+  
+  <!-- Búsqueda -->
+  <div class="search-section">
+    <input 
+      type="text" 
+      [(ngModel)]="citySearch" 
+      placeholder="Buscar ciudad..."
+      (keyup.enter)="searchWeather()"
+      class="search-input">
+    <button (click)="searchWeather()" class="search-btn">🔍 Buscar</button>
+  </div>
+
+  <!-- Estados de carga y error -->
+  <div *ngIf="loading" class="loading">
+    <p>🔄 Cargando datos del clima...</p>
+  </div>
+
+  <div *ngIf="error && !loading" class="error">
+    <p>❌ {{ error }}</p>
+  </div>
+
+  <!-- Datos del clima -->
+  <div *ngIf="weatherData && !loading" class="weather-card">
+    <h4>{{ weatherData.location }}</h4>
+    <div class="weather-main">
+      <img [src]="weatherData.icon" [alt]="weatherData.description" class="weather-icon">
+      <div class="temperature">{{ weatherData.temperature }}°C</div>
+    </div>
+    <p class="description">{{ weatherData.description }}</p>
+    <div class="weather-details">
+      <div class="detail">
+        <span>Sensación:</span>
+        <span>{{ weatherData.feelsLike }}°C</span>
+      </div>
+      <div class="detail">
+        <span>Humedad:</span>
+        <span>{{ weatherData.humidity }}%</span>
+      </div>
+      <div class="detail">
+        <span>Viento:</span>
+        <span>{{ weatherData.windSpeed }} m/s</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje si no hay datos -->
+  <div *ngIf="!weatherData && !loading && !error" class="no-data">
+    <p>No hay datos del clima disponibles</p>
+  </div>
+</div>

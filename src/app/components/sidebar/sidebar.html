@@ -1,0 +1,40 @@
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <!-- En tu header o navbar -->
+<img src="assets/logo-greeni.png" alt="Greeni Logo" class="logo">
+    <span class="logo-text">Greeni</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="nav-links">
+      <li><a [routerLink]="['/']" routerLinkActive="active"><i class="fas fa-home"></i><span>Home</span></a></li>
+      <li><a [routerLink]="['/plantazona']" routerLinkActive="active"><i class="fas fa-seedling"></i><span>Mis plantas</span></a></li>
+      <li><a [routerLink]="['/diagnosticozona']" routerLinkActive="active"><i class="fas fa-magnifying-glass"></i><span>Diagnóstico</span></a></li>
+      <li><a [routerLink]="['/calendar']" routerLinkActive="active"><i class="fas fa-calendar-alt"></i><span>Calendario</span></a></li>
+      <li><a [routerLink]="['/guiazona']" routerLinkActive="active"><i class="fas fa-book"></i><span>Mis Guías</span></a></li>
+      <li><a [routerLink]="['/comunidad']" routerLinkActive="active"><i class="fas fa-users"></i><span>Comunidad</span></a></li>
+      <li><a [routerLink]="['/perfil']" routerLinkActive="active"><i class="fas fa-user"></i><span>Mi Perfil</span></a></li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user-card">
+      <div class="sidebar-user-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="sidebar-user-meta">
+        <div class="user-name">Fressia</div>
+        <div class="user-email">fressia@greeni.com</div>
+      </div>
+    </div>
+    
+    <div class="sidebar-action">
+      <a href="#" class="logout-btn" (click)="logout($event)">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Cerrar Sesión</span>
+      </a>
+    </div>
+  </div>
+</aside>
+<main class="main-content">
+</main>
