@@ -1,0 +1,88 @@
+<div class="report-container">
+  <div class="back-row">
+    <button class="back-btn" mat-icon-button (click)="volver()">
+      <mat-icon class="back-icon">arrow_back</mat-icon>
+    </button>
+
+    <h2 class="report-title">Reporte de severidad</h2>
+  </div>
+
+  <div class="filter-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha inicio</mat-label>
+      <input
+        matInput
+        [matDatepicker]="pickerInicio"
+        [(ngModel)]="fechaInicio"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="pickerInicio">
+      </mat-datepicker-toggle>
+      <mat-datepicker #pickerInicio></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha fin</mat-label>
+      <input
+        matInput
+        [matDatepicker]="pickerFin"
+        [(ngModel)]="fechaFin"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="pickerFin">
+      </mat-datepicker-toggle>
+      <mat-datepicker #pickerFin></mat-datepicker>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="filter-btn"
+      (click)="aplicarFiltro()">
+      Aplicar filtro
+    </button>
+  </div>
+
+
+  <div *ngIf="hasData; else sinDatos" class="chart-wrapper">
+    <canvas
+      baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType"
+      [legend]="barChartLegend">
+    </canvas>
+
+
+    <div class="legend-card">
+      <h3>Detalle por severidad</h3>
+
+      <ul>
+        <li
+          *ngFor="let label of (barChartData.labels || []); let i = index"
+          class="legend-item"
+        >
+          <span
+            class="legend-color"
+            [style.background-color]="getColor(i)">
+          </span>
+
+          <span class="legend-label">{{ label }}</span>
+
+          <span class="legend-value">
+            {{ getValue(i) }} diagnósticos
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <ng-template #sinDatos>
+    <div class="no-data-card">
+      <mat-icon class="no-data-icon">info</mat-icon>
+      <p class="no-data-text">No hay datos para mostrar.</p>
+    </div>
+  </ng-template>
+</div>

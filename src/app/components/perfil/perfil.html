@@ -1,0 +1,323 @@
+<div class="app-layout">
+  <!-- Sidebar se carga dinámicamente -->
+  <main class="main-content">
+    <header class="main-header">
+      <!-- SIN BOTÓN DE 3 PALITOS -->
+      <h1>Mi Perfil</h1>
+    </header>
+
+    <!-- ====== HEADER DE PERFIL ====== -->
+    <section class="profile-hero card">
+      <div class="hero-left">
+        <div
+          class="avatar-preview"
+          [class]="avatarClass"
+          (click)="triggerImageUpload(fileInput)"
+        >
+          @if (user.avatarUrl) {
+            <img [src]="user.avatarUrl" [alt]="user.fullName" class="avatar-image" />
+          } @else {
+            <span class="avatar-initials">{{ getUserInitials() }}</span>
+          }
+          <label for="image-upload" class="avatar-camera" title="Cambiar foto">
+            <i class="fas fa-camera"></i>
+          </label>
+          <input
+            #fileInput
+            id="image-upload"
+            type="file"
+            accept="image/png,image/jpeg"
+            hidden
+            (change)="onImageUpload($event)"
+          />
+        </div>
+        <div class="hero-info">
+          <h2>{{ user.fullName || '—' }}</h2>
+          <p class="muted">{{ user.email || '—' }}</p>
+          <span [class]="getRoleBadgeClass()">
+            {{ getUserRoleDisplay() }}
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== TABS ====== -->
+    <nav class="profile-tabs">
+      <button
+        class="tab-link"
+        [class.active]="activeTab === 'perfil'"
+        (click)="setActiveTab('perfil')"
+      >
+        Perfil
+      </button>
+      <button
+        class="tab-link"
+        [class.active]="activeTab === 'seguridad'"
+        (click)="setActiveTab('seguridad')"
+      >
+        Seguridad
+      </button>
+      <button
+        class="tab-link"
+        [class.active]="activeTab === 'notificaciones'"
+        (click)="setActiveTab('notificaciones')"
+      >
+        Notificaciones
+      </button>
+    </nav>
+
+    <!-- ====== PERFIL ====== -->
+    @if (activeTab === 'perfil') {
+      <section class="profile-section active">
+        <div class="card profile-card">
+          <div class="card-header between">
+            <h3>Información Personal</h3>
+
+            <!-- BOTONES CON SEPARACIÓN -->
+            <div class="actions">
+              <button class="btn small" (click)="createNewUser()">
+                <i class="fas fa-user-plus"></i> Crear nuevo
+              </button>
+              <button class="btn small danger" (click)="deleteUser()">
+                <i class="fas fa-user-minus"></i> Eliminar
+              </button>
+            </div>
+          </div>
+
+          <form
+            [formGroup]="profileForm"
+            (ngSubmit)="saveProfile()"
+            class="card-body grid-2"
+          >
+            <div class="form-group">
+              <label>Usuario ID</label>
+              <input formControlName="userId" class="input" type="text" readonly />
+            </div>
+
+            <div class="form-group">
+              <label>Fecha de unión</label>
+              <input formControlName="joinedAt" class="input" type="text" readonly />
+            </div>
+
+            <div class="form-group">
+              <label>Nombre Completo</label>
+              <input
+                formControlName="fullName"
+                class="input"
+                type="text"
+                placeholder="Tu nombre completo"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Correo Electrónico</label>
+              <input
+                formControlName="email"
+                class="input"
+                type="email"
+                placeholder="tu@correo.com"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Estado</label>
+              <select formControlName="status" class="input">
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Rol</label>
+              <select formControlName="role" class="input">
+                <option value="plantlover">Plant Lover</option>
+                <option value="cientifico">Científico</option>
+                <option value="admin">Admin</option>
+              </select>
+              <p class="help">{{ getRoleHelpText() }}</p>
+            </div>
+
+            <div class="form-group col-2">
+              <label>Biografía</label>
+              <textarea
+                formControlName="bio"
+                class="input"
+                rows="4"
+                placeholder="Cuéntanos algo sobre ti, tus plantas favoritas, etc."
+              ></textarea>
+            </div>
+
+            <div class="form-actions col-2 right">
+              <div
+                class="feedback"
+                [ngClass]="profileFeedback.class"
+                [class.hidden]="!profileFeedback.message"
+              >
+                {{ profileFeedback.message }}
+              </div>
+              <button
+                class="btn primary"
+                type="submit"
+                [disabled]="!canSaveProfile"
+              >
+                Guardar Cambios
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    }
+
+    <!-- ====== SEGURIDAD ====== -->
+    @if (activeTab === 'seguridad') {
+      <section class="profile-section">
+        <div class="card profile-card">
+          <div class="card-header"><h3>Cambiar Contraseña</h3></div>
+          <form
+            [formGroup]="passwordForm"
+            (ngSubmit)="changePassword()"
+            class="card-body grid-1"
+          >
+            <div class="form-group with-icon">
+              <label>Contraseña Actual</label>
+              <input
+                formControlName="currentPassword"
+                class="input"
+                autocomplete="current-password"
+                [type]="showCurrentPassword ? 'text' : 'password'"
+              />
+              <i
+                class="fas password-toggle"
+                [class.fa-eye]="!showCurrentPassword"
+                [class.fa-eye-slash]="showCurrentPassword"
+                (click)="togglePasswordVisibility('current')"
+              ></i>
+            </div>
+            <div class="form-group with-icon">
+              <label>Nueva Contraseña</label>
+              <input
+                formControlName="newPassword"
+                class="input"
+                autocomplete="new-password"
+                [type]="showNewPassword ? 'text' : 'password'"
+              />
+              <i
+                class="fas password-toggle"
+                [class.fa-eye]="!showNewPassword"
+                [class.fa-eye-slash]="showNewPassword"
+                (click)="togglePasswordVisibility('new')"
+              ></i>
+            </div>
+            <div class="form-group with-icon">
+              <label>Confirmar Nueva Contraseña</label>
+              <input
+                formControlName="confirmPassword"
+                class="input"
+                autocomplete="new-password"
+                [type]="showConfirmPassword ? 'text' : 'password'"
+              />
+              <i
+                class="fas password-toggle"
+                [class.fa-eye]="!showConfirmPassword"
+                [class.fa-eye-slash]="showConfirmPassword"
+                (click)="togglePasswordVisibility('confirm')"
+              ></i>
+            </div>
+            <div class="form-actions right">
+              <div
+                class="feedback"
+                [ngClass]="passwordFeedback.class"
+                [class.hidden]="!passwordFeedback.message"
+              >
+                {{ passwordFeedback.message }}
+              </div>
+              <button
+                class="btn primary"
+                type="submit"
+                [disabled]="passwordForm.invalid"
+              >
+                Actualizar Contraseña
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    }
+
+    <!-- ====== NOTIFICACIONES ====== -->
+    @if (activeTab === 'notificaciones') {
+      <section class="profile-section">
+        <div class="card profile-card">
+          <div class="card-header"><h3>Configuración de Notificaciones</h3></div>
+          <div class="card-body list">
+            <label class="setting">
+              <div>
+                <strong>Recordatorios de riego</strong>
+                <p class="muted">Avisos antes de tus tareas programadas.</p>
+              </div>
+              <input
+                type="checkbox"
+                class="switch"
+                [checked]="notifications.reminders"
+                (change)="onNotificationChange('reminders', $event)"
+              />
+            </label>
+            <label class="setting">
+              <div>
+                <strong>Comentarios y Reacciones</strong>
+                <p class="muted">Cuando interactúen con tus posts.</p>
+              </div>
+              <input
+                type="checkbox"
+                class="switch"
+                [checked]="notifications.interactions"
+                (change)="onNotificationChange('interactions', $event)"
+              />
+            </label>
+            <label class="setting">
+              <div>
+                <strong>Solicitudes de Amistad</strong>
+                <p class="muted">Al recibir una nueva solicitud.</p>
+              </div>
+              <input
+                type="checkbox"
+                class="switch"
+                [checked]="notifications.friends"
+                (change)="onNotificationChange('friends', $event)"
+              />
+            </label>
+            <label class="setting">
+              <div>
+                <strong>Boletín Greeni</strong>
+                <p class="muted">Novedades y guías mensuales.</p>
+              </div>
+              <input
+                type="checkbox"
+                class="switch"
+                [checked]="notifications.newsletter"
+                (change)="onNotificationChange('newsletter', $event)"
+              />
+            </label>
+            <div class="form-actions right">
+              <div
+                class="feedback"
+                [ngClass]="notificationsFeedback.class"
+                [class.hidden]="!notificationsFeedback.message"
+              >
+                {{ notificationsFeedback.message }}
+              </div>
+              <button
+                class="btn primary"
+                type="button"
+                (click)="saveNotifications()"
+                [disabled]="!notificationsChanged"
+              >
+                Guardar Notificaciones
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    }
+  </main>
+</div>
